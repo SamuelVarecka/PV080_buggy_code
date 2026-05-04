@@ -14,6 +14,9 @@ def index():
 
         
 CONFIG = {"API_KEY": "771df488714111d39138eb60df756e6b"}
+ALLOWED_URLS = {
+    "https://www.google.com",
+}
 class Person(object):
     def __init__(self, name):
         self.name = name
@@ -32,7 +35,9 @@ def fetch_website(urllib_version, url):
     else:
         raise ValueError("Unsupported urllib version")
     # Fetch and print the requested URL
- 
+    if url not in ALLOWED_URLS:
+        raise ValueError("URL is not allowed")
+
     try: 
         http = urllib.PoolManager()
         r = http.request('GET', url)
